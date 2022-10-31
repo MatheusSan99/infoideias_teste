@@ -14,11 +14,19 @@ class Funcoes
 	Ano 1700 = século 17
 
      * */
-    public function SeculoAno(int $ano): int {
-        
+    public function SeculoAno(int $ano) : int {
+        if ($ano >= 1 && $ano <= 100) {
+            return 1;
+        }
+        $primeiroDigito = substr($ano,0,1);
+        if (substr($ano,-1,1) != 0) {
+            $calculo = (int) $primeiroDigito * 10;
+            $soma = (int) substr($ano,1,1) + 1 + $calculo;
+            return $soma;
+        }
+        return $primeiroDigito = (int) substr($ano,0,2);
     }
 
-    
 	
 	
 	
@@ -36,9 +44,32 @@ class Funcoes
     Número = 29 resposta = 23
 
      * */
-    public function PrimoAnterior(int $numero): int {
-        
+    public function PrimoAnterior(int $numero) : int
+    {
+        $primos = [];
+        $controlador = false;
+        if ($numero > 1) {
+            for ($i= $numero; count($primos) < $numero ; $i--) {
+                for ($j=2; $j < $i; $j++) {
+                    if($i % $j == 0){
+                        $controlador = false;
+                        break;
+                    }
+                    $controlador = true;
+
+                }
+                if($controlador)
+                    $primos[] = $i;
+            }
+
+            foreach ($primos as $ignored) {
+                $ultimoPrimo = $primos[1];
+            }
+
+        }
+        return $ultimoPrimo;
     }
+
 
 
 
@@ -65,21 +96,26 @@ class Funcoes
 	resposta = 25
 
      * */
-    public function SegundoMaior(array $arr): int {
-        
+    public function SegundoMaior(array $arr) :int{
+        $arr = array_map("max",$arr);
+        $max = max($arr);
+        $search = array_search($max,$arr);
+        unset($arr[$search]);
+        return max($arr);
     }
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 
     /*
    Desenvolva uma função que receba como parâmetro um array de números inteiros e responda com TRUE or FALSE se é possível obter uma sequencia crescente removendo apenas um elemento do array.
 
-	Exemplos para teste 
+	Exemplos para teste
 
 	Obs.:-  É Importante  realizar todos os testes abaixo para garantir o funcionamento correto.
          -  Sequencias com apenas um elemento são consideradas crescentes
@@ -106,7 +142,25 @@ class Funcoes
 
      * */
     
-	public function SequenciaCrescente(array $arr): boolean {
-        
+	public function SequenciaCrescente(array $arr){
+        //falta terminar esse exercicio
+        $erros = 0;
+        $sequencial = false;
+
+        for ($i = 0; $i < count($arr); $i++) {
+            $lastNumber = $arr[$i - 1];
+            if ($arr[$i] < $lastNumber) {
+                $erros++;
+            }
+            if ($erros > 0 ) {
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 }
+$func = new Funcoes();
+
+$arr = [10, 1, 2, 3, 4, 5, 6, 1];
+echo $func->SequenciaCrescente($arr);
